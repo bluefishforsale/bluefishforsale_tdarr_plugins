@@ -88,7 +88,7 @@ const details = () => {
       {
         name: "audio_commentary",
         type: 'string',
-        defaultValue: 'false',
+        defaultValue: 'true',
         inputUI: {
           type: 'text',
         },
@@ -102,7 +102,7 @@ const details = () => {
       {
         name: "subtitle_language",
         type: 'string',
-        defaultValue: '',
+        defaultValue: 'eng',
         inputUI: {
           type: 'text',
         },
@@ -116,7 +116,7 @@ const details = () => {
       {
         name: "subtitle_commentary",
         type: 'string',
-        defaultValue: 'false',
+        defaultValue: 'true',
         inputUI: {
           type: 'text',
         },
