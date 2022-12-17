@@ -515,7 +515,7 @@ const plugin = (file, librarySettings, inputs, otherArguments) => {
   response.preset += ` -bf 5`;
 
   // fix probe size errors
-  response.preset += ` -analyzeduration 2147483647 -probesize 2147483647`;
+  response.preset += ` -analyzeduration 10000000 -probesize 10000000`;
 
   response.processFile =
     audioSettings.shouldProcess ||
