@@ -512,7 +512,7 @@ const plugin = (file, librarySettings, inputs, otherArguments) => {
     id++;
   }
   // b frames argument
-  response.preset += ` -bf 5`;
+  response.preset += ` -bf 0`;
 
   // fix probe size errors
   response.preset += ` -analyzeduration 10000000 -probesize 10000000`;
