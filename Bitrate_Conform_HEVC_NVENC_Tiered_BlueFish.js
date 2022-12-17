@@ -442,8 +442,10 @@ function buildVideoConfiguration(inputs, file, logger) {
 
       bitratecheck = parseInt(tier["bitrate"]);
       if (bitrateprobe !== null && bitrateprobe < bitratecheck) {
+        logger.AddSuccess("Probed Bitrate is less than tiered Bitrate");
         bitratetarget = parseInt((bitrateprobe * inputs.target_pct_reduction) / 1000);
       } else {
+        logger.AddError("Probed Bitrate is greater than tiered Bitrate");
         bitratetarget = parseInt(tier["bitrate"] / 1000);
       }
       bitratemax = bitratetarget + tier["max_increase"];
