@@ -430,7 +430,7 @@ function buildVideoConfiguration(inputs, file, logger) {
     // remove png streams.
     if (stream.codec_name === "png") {
       configuration.AddOutputSetting(`-map -0:v:${id}`);
-    } else if (stream.codec_name !== "vp9") {  // Check if should Transcode.
+    } else {  // Check if should Transcode.
       var bitrateprobe = calculateBitrate(file);
       var bitratetarget = 0;
       var bitratemax = 0;
@@ -442,7 +442,9 @@ function buildVideoConfiguration(inputs, file, logger) {
 
       bitratecheck = parseInt(tier["bitrate"]);
       if (bitrateprobe !== null && bitrateprobe < bitratecheck) {
-        bitratetarget = parseInt((bitrateprobe * inputs.target_pct_reduction) / 1000);
+        // bitratetarget = parseInt((bitrateprobe * inputs.target_pct_reduction) / 1000);
+        configuration.AddOutputSetting("-c:v copy");
+        logger.AddError("File has acceptable bitrate, just REMUX");
       } else {
         bitratetarget = parseInt(tier["bitrate"] / 1000);
       }
