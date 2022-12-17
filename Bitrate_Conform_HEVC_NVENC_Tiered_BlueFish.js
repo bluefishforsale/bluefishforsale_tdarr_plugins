@@ -441,13 +441,8 @@ function buildVideoConfiguration(inputs, file, logger) {
       var tier = tiered[file.video_resolution];
 
       bitratecheck = parseInt(tier["bitrate"]);
-      if (bitrateprobe !== null && bitrateprobe < bitratecheck) {
-        // bitratetarget = parseInt((bitrateprobe * inputs.target_pct_reduction) / 1000);
-        configuration.AddOutputSetting("-c:v copy");
-        logger.AddError("File has acceptable bitrate, just REMUX");
-      } else {
-        bitratetarget = parseInt(tier["bitrate"] / 1000);
-      }
+      if (bitrateprobe !== null && bitrateprobe > bitratecheck) {
+      bitratetarget = parseInt(tier["bitrate"] / 1000);
       bitratemax = bitratetarget + tier["max_increase"];
       cq = tier["cq"];
 
