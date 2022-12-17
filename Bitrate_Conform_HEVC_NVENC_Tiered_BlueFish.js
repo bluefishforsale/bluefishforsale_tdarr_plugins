@@ -430,7 +430,7 @@ function buildVideoConfiguration(inputs, file, logger) {
     // remove png streams.
     if (stream.codec_name === "png") {
       configuration.AddOutputSetting(`-map -0:v:${id}`);
-    } else if (stream.codec_name !== "hevc" && stream.codec_name !== "vp9") {  // Check if should Transcode.
+    } else if (stream.codec_name !== "vp9") {  // Check if should Transcode.
       var bitrateprobe = calculateBitrate(file);
       var bitratetarget = 0;
       var bitratemax = 0;
@@ -442,10 +442,8 @@ function buildVideoConfiguration(inputs, file, logger) {
 
       bitratecheck = parseInt(tier["bitrate"]);
       if (bitrateprobe !== null && bitrateprobe < bitratecheck) {
-        logger.AddSuccess("Probed Bitrate is less than tiered Bitrate");
         bitratetarget = parseInt((bitrateprobe * inputs.target_pct_reduction) / 1000);
       } else {
-        logger.AddError("Probed Bitrate is greater than tiered Bitrate");
         bitratetarget = parseInt(tier["bitrate"] / 1000);
       }
       bitratemax = bitratetarget + tier["max_increase"];
