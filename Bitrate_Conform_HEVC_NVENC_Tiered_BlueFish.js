@@ -2,7 +2,7 @@
 
 const details = () => {
   return {
-    id: "Conform_Bitrate_Conform_HEVC_NVENC_Tiered_BlueFish",
+    id: "Bitrate_Conform_HEVC_NVENC_Tiered_BlueFish",
     Stage: 'Pre-processing',
     Name: "BlueFish Tiered H265 MKV, remove audio & subtitles [NVENC]",
     Stage: "Pre-processing",
