@@ -444,7 +444,7 @@ function buildVideoConfiguration(inputs, file, logger) {
       bitratecheck = parseInt(tier["bitrate"]);
       if (bitrateprobe !== null && bitrateprobe < bitratecheck) {
           logger.AddSuccess("File bitrate is already within allowed range");
-          return;
+          // return;
       } else {
         bitratetarget = parseInt(tier["bitrate"] / 1000);
         bitratemax = bitratetarget + tier["max_increase"];
