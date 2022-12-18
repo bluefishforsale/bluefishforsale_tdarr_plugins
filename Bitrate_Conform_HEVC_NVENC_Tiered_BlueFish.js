@@ -27,7 +27,7 @@ const details = () => {
       {
         name: "target_bitrate_720p",
         type: 'string',
-        defaultValue: '6000000',
+        defaultValue: '7000000',
         inputUI: {
           type: 'text',
         },
@@ -38,7 +38,7 @@ const details = () => {
       {
         name: "target_bitrate_1080p",
         type: 'string',
-        defaultValue: '5000000',
+        defaultValue: '20000000',
         inputUI: {
           type: 'text',
         },
@@ -49,7 +49,7 @@ const details = () => {
       {
         name: "target_bitrate_4KUHD",
         type: 'string',
-        defaultValue: '15000000',
+        defaultValue: '30000000',
         inputUI: {
           type: 'text',
         },
