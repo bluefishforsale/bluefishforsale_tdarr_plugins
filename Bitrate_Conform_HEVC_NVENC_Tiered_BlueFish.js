@@ -370,32 +370,32 @@ function buildVideoConfiguration(inputs, file, logger) {
     "480p": {
       "bitrate": inputs.target_bitrate_480p576p,
       "max_increase": 500,
-      "cq": 29
+      "cq": 10
     },
     "576p": {
       "bitrate": inputs.target_bitrate_480p576p,
       "max_increase": 500,
-      "cq": 29
+      "cq": 10
     },
     "720p": {
       "bitrate": inputs.target_bitrate_720p,
       "max_increase": 2000,
-      "cq": 30
+      "cq": 10
     },
     "1080p": {
       "bitrate": inputs.target_bitrate_1080p,
       "max_increase": 2500,
-      "cq": 31
+      "cq": 10
     },
     "4KUHD": {
       "bitrate": inputs.target_bitrate_4KUHD,
       "max_increase": 6000,
-      "cq": 31
+      "cq": 10
     },
     "Other": {
       "bitrate": inputs.target_bitrate_1080p,
       "max_increase": 2500,
-      "cq": 31
+      "cq": 10
     }
   };
 
@@ -416,18 +416,13 @@ function buildVideoConfiguration(inputs, file, logger) {
       return;
     }
 
-    // if ((stream.codec_name === "hevc" || stream.codec_name === "vp9") && file.container === "mkv") {
-    //   logger.AddSuccess("File is in HEVC codec and in MKV");
-    //   return;
-    // }
-
-    // Check if should Remux into MKV
+    /* Check if should Remux into MKV */
     if ((stream.codec_name === "hevc" || stream.codec_name === "vp9") && file.container !== "mkv") {
       configuration.AddOutputSetting("-c:v copy");
       logger.AddError("File is in HEVC codec but not MKV. Will remux");
     }
 
-    // remove png streams.
+    /* Remove png streams */
     if (stream.codec_name === "png") {
       configuration.AddOutputSetting(`-map -0:v:${id}`);
     } else {
@@ -440,7 +435,7 @@ function buildVideoConfiguration(inputs, file, logger) {
       /*  Determine tiered bitrate variables */
       var tier = tiered[file.video_resolution];
 
-        // Check if should Transcode
+      /* Check if should Transcode */
       bitratecheck = parseInt(tier["bitrate"]);
       if (bitrateprobe !== null && bitrateprobe < bitratecheck) {
           logger.AddSuccess("File bitrate is already within allowed range");
@@ -452,7 +447,7 @@ function buildVideoConfiguration(inputs, file, logger) {
 
         configuration.RemoveOutputSetting("-c:v copy");
         configuration.AddOutputSetting(
-          `-c:v hevc_nvenc -qmin 0 -cq:v ${cq} -b:v ${bitratetarget}k -maxrate:v ${bitratemax}k -preset slow -tune hq -rc-lookahead 32 -spatial_aq:v 1 -aq-strength:v 8`
+          `-c:v hevc_nvenc -qmin 0 -cq:v ${cq} -b:v ${bitratetarget}k -maxrate:v ${bitratemax}k -preset veryslow -tune hq -rc-lookahead 32 -spatial_aq:v 1 -aq-strength:v 8`
         );
 
         // Deal with BT.2020 Color Range Standard
