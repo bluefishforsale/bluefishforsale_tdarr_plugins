@@ -421,7 +421,7 @@ function buildVideoConfiguration(inputs, file, logger) {
     //   return;
     // }
 
-    // Check if should Remux.
+    // Check if should Remux into MKV
     if ((stream.codec_name === "hevc" || stream.codec_name === "vp9") && file.container !== "mkv") {
       configuration.AddOutputSetting("-c:v copy");
       logger.AddError("File is in HEVC codec but not MKV. Will remux");
@@ -430,7 +430,7 @@ function buildVideoConfiguration(inputs, file, logger) {
     // remove png streams.
     if (stream.codec_name === "png") {
       configuration.AddOutputSetting(`-map -0:v:${id}`);
-    } else {  // Check if should Transcode.
+    } else {
       var bitrateprobe = calculateBitrate(file);
       var bitratetarget = 0;
       var bitratemax = 0;
@@ -440,24 +440,26 @@ function buildVideoConfiguration(inputs, file, logger) {
       /*  Determine tiered bitrate variables */
       var tier = tiered[file.video_resolution];
 
+        // Check if should Transcode
       bitratecheck = parseInt(tier["bitrate"]);
       if (bitrateprobe !== null && bitrateprobe > bitratecheck) {
-      bitratetarget = parseInt(tier["bitrate"] / 1000);
-      bitratemax = bitratetarget + tier["max_increase"];
-      cq = tier["cq"];
+        bitratetarget = parseInt(tier["bitrate"] / 1000);
+        bitratemax = bitratetarget + tier["max_increase"];
+        cq = tier["cq"];
 
-      configuration.RemoveOutputSetting("-c:v copy");
-      configuration.AddOutputSetting(
-        `-c:v hevc_nvenc -qmin 0 -cq:v ${cq} -b:v ${bitratetarget}k -maxrate:v ${bitratemax}k -preset medium -rc-lookahead 32 -spatial_aq:v 1 -aq-strength:v 8`
-      );
+        configuration.RemoveOutputSetting("-c:v copy");
+        configuration.AddOutputSetting(
+          `-c:v hevc_nvenc -qmin 0 -cq:v ${cq} -b:v ${bitratetarget}k -maxrate:v ${bitratemax}k -preset medium -rc-lookahead 32 -spatial_aq:v 1 -aq-strength:v 8`
+        );
 
-      configuration.AddInputSetting(inputSettings[file.video_codec_name]);
+        configuration.AddInputSetting(inputSettings[file.video_codec_name]);
 
-      if (file.video_codec_name === "h264" && file.ffProbeData.streams[0].profile !== "High 10") {
-        configuration.AddInputSetting("-c:v h264_cuvid");
+        if (file.video_codec_name === "h264" && file.ffProbeData.streams[0].profile !== "High 10") {
+          configuration.AddInputSetting("-c:v h264_cuvid");
+        }
+
+        logger.AddError("Transcoding to HEVC using NVidia NVENC");
       }
-
-      logger.AddError("Transcoding to HEVC using NVidia NVENC");
     }
   }
 
