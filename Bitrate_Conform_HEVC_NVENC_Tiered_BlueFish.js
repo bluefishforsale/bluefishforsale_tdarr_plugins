@@ -33,7 +33,7 @@ const details = () => {
         },
         tooltip: `Specify the target bitrate for 720p files, if current bitrate exceeds the target. Otherwise target_pct_reduction will be used.
                 \\nExample 6 Mbps:\\n
-                6000000`,
+                7000000`,
       },
       {
         name: "target_bitrate_1080p",
@@ -44,7 +44,7 @@ const details = () => {
         },
         tooltip: `Specify the target bitrate for 1080p files, if current bitrate exceeds the target. Otherwise target_pct_reduction will be used.
                 \\nExample 5 Mbps:\\n
-                5000000`,
+                20000000`,
       },
       {
         name: "target_bitrate_4KUHD",
@@ -55,7 +55,7 @@ const details = () => {
         },
         tooltip: `Specify the target bitrate for 4KUHD files, if current bitrate exceeds the target. Otherwise target_pct_reduction will be used.
                 \\nExample 15 Mbps:\\n
-                15000000`,
+                30000000`,
       },
       {
         name: "target_pct_reduction",
