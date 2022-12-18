@@ -447,7 +447,7 @@ function buildVideoConfiguration(inputs, file, logger) {
 
         configuration.RemoveOutputSetting("-c:v copy");
         configuration.AddOutputSetting(
-          `-c:v hevc_nvenc -qmin 0 -cq:v ${cq} -b:v ${bitratetarget}k -maxrate:v ${bitratemax}k -preset veryslow -tune hq -rc-lookahead 32 -spatial_aq:v 1 -aq-strength:v 8`
+          `-c:v hevc_nvenc -qmin 0 -cq:v ${cq} -b:v ${bitratetarget}k -maxrate:v ${bitratemax}k -preset slow -tune hq -rc-lookahead 32 -spatial_aq:v 1 -aq-strength:v 8`
         );
 
         // Deal with BT.2020 Color Range Standard
