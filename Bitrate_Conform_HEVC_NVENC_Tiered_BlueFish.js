@@ -451,6 +451,9 @@ function buildVideoConfiguration(inputs, file, logger) {
         configuration.AddOutputSetting(
           `-c:v hevc_nvenc -qmin 0 -cq:v ${cq} -b:v ${bitratetarget}k -maxrate:v ${bitratemax}k -preset medium -rc-lookahead 32 -spatial_aq:v 1 -aq-strength:v 8`
         );
+        if ( stream.color_primaries === "bt2020" )  {
+          configuration.AddOutputSetting(`-pix_fmt p010le -color_primaries bt2020 -colorspace bt2020nc -color_trc smpte2084`);
+        };
 
         configuration.AddInputSetting(inputSettings[file.video_codec_name]);
 
