@@ -452,7 +452,7 @@ function buildVideoConfiguration(inputs, file, logger) {
 
         configuration.RemoveOutputSetting("-c:v copy");
         configuration.AddOutputSetting(
-          `-hwaccel cuda -hwaccel_output_format cuda -c:v hevc_nvenc -qmin 0 -cq:v ${cq} -b:v ${bitratetarget}k -maxrate:v ${bitratemax}k -preset p7 -tune hq -rc-lookahead 32 -spatial_aq:v 1 -aq-strength:v 8`
+          `-c:v hevc_nvenc -qmin 0 -cq:v ${cq} -b:v ${bitratetarget}k -maxrate:v ${bitratemax}k -preset p7 -tune hq -rc-lookahead 32 -spatial_aq:v 1 -aq-strength:v 8`
         );
 
         // Deal with BT.2020 Color Range Standard
@@ -463,7 +463,8 @@ function buildVideoConfiguration(inputs, file, logger) {
         configuration.AddInputSetting(inputSettings[file.video_codec_name]);
 
         if (file.video_codec_name === "h264" && file.ffProbeData.streams[0].profile !== "High 10") {
-          configuration.AddInputSetting("-c:v h264_cuvid");
+          // configuration.AddInputSetting("-c:v h264_cuvid");
+          configuration.AddInputSetting("-hwaccel cuda -hwaccel_output_format cuda -c:v h264_cuvid");
         }
 
         logger.AddError("Transcoding to HEVC using NVidia NVENC");
