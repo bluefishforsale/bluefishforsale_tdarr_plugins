@@ -442,7 +442,10 @@ function buildVideoConfiguration(inputs, file, logger) {
 
         // Check if should Transcode
       bitratecheck = parseInt(tier["bitrate"]);
-      if (bitrateprobe !== null && bitrateprobe > bitratecheck) {
+      if (bitrateprobe !== null && bitrateprobe < bitratecheck) {
+          logger.AddSuccess("File bitrate is already within allowed range");
+          return;
+      } else {
         bitratetarget = parseInt(tier["bitrate"] / 1000);
         bitratemax = bitratetarget + tier["max_increase"];
         cq = tier["cq"];
@@ -451,6 +454,8 @@ function buildVideoConfiguration(inputs, file, logger) {
         configuration.AddOutputSetting(
           `-c:v hevc_nvenc -qmin 0 -cq:v ${cq} -b:v ${bitratetarget}k -maxrate:v ${bitratemax}k -preset medium -rc-lookahead 32 -spatial_aq:v 1 -aq-strength:v 8`
         );
+
+        // Deal with BT.2020 Color Range Standard
         if ( stream.color_primaries === "bt2020" )  {
           configuration.AddOutputSetting(`-pix_fmt p010le -color_primaries bt2020 -colorspace bt2020nc -color_trc smpte2084`);
         };
@@ -512,7 +517,7 @@ const plugin = (file, librarySettings, inputs, otherArguments) => {
     id++;
   }
   // b frames argument
-  response.preset += ` -bf 0`;
+  response.preset += ` -bf 5`;
 
   // fix probe size errors
   response.preset += ` -analyzeduration 10000000 -probesize 10000000`;
