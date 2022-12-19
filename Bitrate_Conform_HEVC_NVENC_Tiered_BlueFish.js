@@ -439,10 +439,11 @@ function buildVideoConfiguration(inputs, file, logger) {
       bitratecheck = parseInt(tier["bitrate"]);
       if (bitrateprobe !== null && bitrateprobe < bitratecheck) {
           logger.AddSuccess("File bitrate is already within allowed range");
+          configuration.shouldProcess = false;
           return;
       } else {
-        bitratetarget = parseInt(tier["bitrate"] );
-        bitratemax = bitratetarget + tier["max_increase"];
+        bitratetarget = parseInt(tier["bitrate"] - tier["max_increase" );
+        bitratemax = bitratetarget];
         cq = tier["cq"];
 
         configuration.RemoveOutputSetting("-c:v copy");
