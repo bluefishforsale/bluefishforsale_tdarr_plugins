@@ -440,6 +440,7 @@ function buildVideoConfiguration(inputs, file, logger) {
       bitratecheck = parseInt(tier["bitrate"]);
       console.log("%s: %s <? %s", file._id, bitrateprobe, bitratecheck)
       if (bitrateprobe !== null && bitrateprobe < bitratecheck) {
+          console.log("we should be exiting now... no transcode needed");
           logger.AddSuccess("stream bitrate is already within allowed range");
           configuration.shouldProcess = false;
           return;
