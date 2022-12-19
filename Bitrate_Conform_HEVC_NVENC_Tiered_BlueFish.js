@@ -16,57 +16,61 @@ const details = () => {
       {
         name: "target_bitrate_480p576p",
         type: 'string',
-        defaultValue: '2000000',
+        defaultValue: '2M',
         inputUI: {
           type: 'text',
         },
         tooltip: `Specify the target bitrate for 480p and 576p files, if current bitrate exceeds the target. Otherwise target_pct_reduction will be used.
-                \\nExample 2 Mbps:\\n
-                2000000`,
+                rates can be specified in bps with no suffix, or using k,M to specify higher orders of magnitude.
+                \\nExample 2M \\n
+                2M`,
       },
       {
         name: "target_bitrate_720p",
         type: 'string',
-        defaultValue: '7000000',
+        defaultValue: '7M',
         inputUI: {
           type: 'text',
         },
         tooltip: `Specify the target bitrate for 720p files, if current bitrate exceeds the target. Otherwise target_pct_reduction will be used.
-                \\nExample 6 Mbps:\\n
-                7000000`,
+                rates can be specified in bps with no suffix, or using k,M to specify higher orders of magnitude.
+                \\nExample 7 Mbps:\\n
+                7M`,
       },
       {
         name: "target_bitrate_1080p",
         type: 'string',
-        defaultValue: '20000000',
+        defaultValue: '10M',
         inputUI: {
           type: 'text',
         },
         tooltip: `Specify the target bitrate for 1080p files, if current bitrate exceeds the target. Otherwise target_pct_reduction will be used.
-                \\nExample 5 Mbps:\\n
-                20000000`,
+                rates can be specified in bps with no suffix, or using k,M to specify higher orders of magnitude.
+                \\nExample 10 Mbps\\n
+                10M`,
       },
       {
         name: "target_bitrate_4KUHD",
         type: 'string',
-        defaultValue: '30000000',
+        defaultValue: '20M',
         inputUI: {
           type: 'text',
         },
         tooltip: `Specify the target bitrate for 4KUHD files, if current bitrate exceeds the target. Otherwise target_pct_reduction will be used.
-                \\nExample 15 Mbps:\\n
-                30000000`,
+                rates can be specified in bps with no suffix, or using k,M to specify higher orders of magnitude.
+                \\nExample 20 Mbps\\n
+                20M`,
       },
       {
         name: "target_pct_reduction",
         type: 'string',
-        defaultValue: '.50',
+        defaultValue: '.25',
         inputUI: {
           type: 'text',
         },
         tooltip: `Specify the target reduction of bitrate, if current bitrate is less than resolution targets.
-                \\nExample 50%:\\n
-                .50`,
+                \\nExample 25%:\\n
+                .25`,
       },
       {
         name: "audio_language",
@@ -370,32 +374,32 @@ function buildVideoConfiguration(inputs, file, logger) {
     "480p": {
       "bitrate": inputs.target_bitrate_480p576p,
       "max_increase": 500,
-      "cq": 10
+      "cq": 20
     },
     "576p": {
       "bitrate": inputs.target_bitrate_480p576p,
       "max_increase": 500,
-      "cq": 10
+      "cq": 20
     },
     "720p": {
       "bitrate": inputs.target_bitrate_720p,
       "max_increase": 2000,
-      "cq": 10
+      "cq": 20
     },
     "1080p": {
       "bitrate": inputs.target_bitrate_1080p,
       "max_increase": 2500,
-      "cq": 10
+      "cq": 20
     },
     "4KUHD": {
       "bitrate": inputs.target_bitrate_4KUHD,
       "max_increase": 6000,
-      "cq": 10
+      "cq": 20
     },
     "Other": {
       "bitrate": inputs.target_bitrate_1080p,
       "max_increase": 2500,
-      "cq": 10
+      "cq": 20
     }
   };
 
@@ -441,13 +445,13 @@ function buildVideoConfiguration(inputs, file, logger) {
           logger.AddSuccess("File bitrate is already within allowed range");
           return;
       } else {
-        bitratetarget = parseInt(tier["bitrate"] / 1000);
+        bitratetarget = parseInt(tier["bitrate"] );
         bitratemax = bitratetarget + tier["max_increase"];
         cq = tier["cq"];
 
         configuration.RemoveOutputSetting("-c:v copy");
         configuration.AddOutputSetting(
-          `-c:v hevc_nvenc -qmin 0 -cq:v ${cq} -b:v ${bitratetarget}k -maxrate:v ${bitratemax}k -preset slow -tune hq -rc-lookahead 32 -spatial_aq:v 1 -aq-strength:v 8`
+          `-c:v hevc_nvenc -qmin 0 -cq:v ${cq} -b:v ${bitratetarget} -maxrate:v ${bitratemax} -preset slow -tune hq -rc-lookahead 32 -spatial_aq:v 1 -aq-strength:v 8`
         );
 
         // Deal with BT.2020 Color Range Standard
