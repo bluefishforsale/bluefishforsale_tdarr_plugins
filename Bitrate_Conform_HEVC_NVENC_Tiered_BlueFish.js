@@ -369,33 +369,33 @@ function buildVideoConfiguration(inputs, file, logger) {
   var tiered = {
     "480p": {
       "bitrate": inputs.target_bitrate_480p576p,
-      "max_increase": 5000,
-      "cq": 20
+      "max_increase": 50000,
+      "cq": 25
     },
     "576p": {
       "bitrate": inputs.target_bitrate_480p576p,
-      "max_increase": 5000,
-      "cq": 20
+      "max_increase": 50000,
+      "cq": 25
     },
     "720p": {
       "bitrate": inputs.target_bitrate_720p,
-      "max_increase": 20000,
-      "cq": 20
+      "max_increase": 200000,
+      "cq": 25
     },
     "1080p": {
       "bitrate": inputs.target_bitrate_1080p,
-      "max_increase": 250000,
-      "cq": 20
+      "max_increase": 2500000,
+      "cq": 25
     },
     "4KUHD": {
       "bitrate": inputs.target_bitrate_4KUHD,
-      "max_increase": 600000,
-      "cq": 20
+      "max_increase": 6000000,
+      "cq": 25
     },
     "Other": {
       "bitrate": inputs.target_bitrate_1080p,
-      "max_increase": 250000,
-      "cq": 20
+      "max_increase": 2500000,
+      "cq": 25
     }
   };
 
@@ -518,7 +518,7 @@ const plugin = (file, librarySettings, inputs, otherArguments) => {
   response.preset += ` -bf 0`;
 
   // fix probe size errors
-  response.preset += ` -analyzeduration 50000000 -probesize 50000000`;
+  response.preset += ` -analyzeduration 500000000 -probesize 500000000`;
 
   response.processFile =
     audioSettings.shouldProcess ||
