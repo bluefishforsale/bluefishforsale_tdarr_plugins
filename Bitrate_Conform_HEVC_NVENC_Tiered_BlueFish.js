@@ -16,50 +16,46 @@ const details = () => {
       {
         name: "target_bitrate_480p576p",
         type: 'string',
-        defaultValue: '2M',
+        defaultValue: '2000000',
         inputUI: {
           type: 'text',
         },
         tooltip: `Specify the target bitrate for 480p and 576p files, if current bitrate exceeds the target. Otherwise target_pct_reduction will be used.
-                rates can be specified in bps with no suffix, or using k,M to specify higher orders of magnitude.
                 \\nExample 2M \\n
-                2M`,
+                2000000`,
       },
       {
         name: "target_bitrate_720p",
         type: 'string',
-        defaultValue: '7M',
+        defaultValue: '7000000',
         inputUI: {
           type: 'text',
         },
         tooltip: `Specify the target bitrate for 720p files, if current bitrate exceeds the target. Otherwise target_pct_reduction will be used.
-                rates can be specified in bps with no suffix, or using k,M to specify higher orders of magnitude.
                 \\nExample 7 Mbps:\\n
-                7M`,
+                7000000`,
       },
       {
         name: "target_bitrate_1080p",
         type: 'string',
-        defaultValue: '10M',
+        defaultValue: '10000000',
         inputUI: {
           type: 'text',
         },
         tooltip: `Specify the target bitrate for 1080p files, if current bitrate exceeds the target. Otherwise target_pct_reduction will be used.
-                rates can be specified in bps with no suffix, or using k,M to specify higher orders of magnitude.
                 \\nExample 10 Mbps\\n
-                10M`,
+                10000000`,
       },
       {
         name: "target_bitrate_4KUHD",
         type: 'string',
-        defaultValue: '20M',
+        defaultValue: '20000000',
         inputUI: {
           type: 'text',
         },
         tooltip: `Specify the target bitrate for 4KUHD files, if current bitrate exceeds the target. Otherwise target_pct_reduction will be used.
-                rates can be specified in bps with no suffix, or using k,M to specify higher orders of magnitude.
                 \\nExample 20 Mbps\\n
-                20M`,
+                20000000`,
       },
       {
         name: "target_pct_reduction",
