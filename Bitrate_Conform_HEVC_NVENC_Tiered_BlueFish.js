@@ -65,8 +65,8 @@ const details = () => {
           type: 'text',
         },
         tooltip: `Specify the target reduction of bitrate, if current bitrate is less than resolution targets.
-                \\nExample 25%:\\n
-                .25`,
+                \\nExample 50%:\\n
+                .50`,
       },
       {
         name: "audio_language",
@@ -370,32 +370,32 @@ function buildVideoConfiguration(inputs, file, logger) {
     "480p": {
       "bitrate": inputs.target_bitrate_480p576p,
       "max_increase": 50000,
-      "cq": 25
+      "cq": 30
     },
     "576p": {
       "bitrate": inputs.target_bitrate_480p576p,
       "max_increase": 50000,
-      "cq": 25
+      "cq": 30
     },
     "720p": {
       "bitrate": inputs.target_bitrate_720p,
       "max_increase": 200000,
-      "cq": 25
+      "cq": 30
     },
     "1080p": {
       "bitrate": inputs.target_bitrate_1080p,
       "max_increase": 2500000,
-      "cq": 25
+      "cq": 30
     },
     "4KUHD": {
       "bitrate": inputs.target_bitrate_4KUHD,
       "max_increase": 6000000,
-      "cq": 25
+      "cq": 30
     },
     "Other": {
       "bitrate": inputs.target_bitrate_1080p,
       "max_increase": 2500000,
-      "cq": 25
+      "cq": 30
     }
   };
 
