@@ -433,12 +433,12 @@ function buildVideoConfiguration(inputs, file, logger) {
       var bitratecheck = 0;
 
       /*  Determine tiered bitrate variables */
-      console.log("%s: %s", file, file.video_resolution)
+      console.log("%s: %s", file._id, file.video_resolution)
       var tier = tiered[file.video_resolution];
 
       /* Check if should Transcode */
       bitratecheck = parseInt(tier["bitrate"]);
-      console.log("%s: %s <? %s", file, file.video_resolution, bitratecheck)
+      console.log("%s: %s <? %s", file._id, bitrateprobe, bitratecheck)
       if (bitrateprobe !== null && bitrateprobe < bitratecheck) {
           logger.AddSuccess("stream bitrate is already within allowed range");
           configuration.shouldProcess = false;
