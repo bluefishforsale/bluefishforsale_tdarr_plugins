@@ -369,32 +369,32 @@ function buildVideoConfiguration(inputs, file, logger) {
   var tiered = {
     "480p": {
       "bitrate": inputs.target_bitrate_480p576p,
-      "max_increase": 500,
+      "max_increase": 5000,
       "cq": 20
     },
     "576p": {
       "bitrate": inputs.target_bitrate_480p576p,
-      "max_increase": 500,
+      "max_increase": 5000,
       "cq": 20
     },
     "720p": {
       "bitrate": inputs.target_bitrate_720p,
-      "max_increase": 2000,
+      "max_increase": 20000,
       "cq": 20
     },
     "1080p": {
       "bitrate": inputs.target_bitrate_1080p,
-      "max_increase": 2500,
+      "max_increase": 250000,
       "cq": 20
     },
     "4KUHD": {
       "bitrate": inputs.target_bitrate_4KUHD,
-      "max_increase": 6000,
+      "max_increase": 600000,
       "cq": 20
     },
     "Other": {
       "bitrate": inputs.target_bitrate_1080p,
-      "max_increase": 2500,
+      "max_increase": 250000,
       "cq": 20
     }
   };
