@@ -60,7 +60,7 @@ const details = () => {
       {
         name: "target_pct_reduction",
         type: 'string',
-        defaultValue: '.25',
+        defaultValue: '.50',
         inputUI: {
           type: 'text',
         },
