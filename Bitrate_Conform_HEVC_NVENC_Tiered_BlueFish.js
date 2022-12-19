@@ -442,8 +442,8 @@ function buildVideoConfiguration(inputs, file, logger) {
           configuration.shouldProcess = false;
           return;
       } else {
-        bitratetarget = parseInt(tier["bitrate"] - tier["max_increase" );
-        bitratemax = bitratetarget];
+        bitratetarget = parseInt(tier["bitrate"] - tier["max_increase"] );
+        bitratemax = bitratetarget;
         cq = tier["cq"];
 
         configuration.RemoveOutputSetting("-c:v copy");
