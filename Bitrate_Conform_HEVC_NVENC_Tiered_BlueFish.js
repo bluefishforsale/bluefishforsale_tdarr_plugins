@@ -426,9 +426,9 @@ function buildVideoConfiguration(inputs, file, logger) {
     if (stream.codec_name === "png") {
       configuration.AddOutputSetting(`-map -0:v:${id}`);
     } else {
+      console.log("Not png...");
       var bitrateprobe = calculateBitrate(file);
       var bitratetarget = 0;
-      var bitratemax = 0;
       var cq = 0;
       var bitratecheck = 0;
 
@@ -439,19 +439,17 @@ function buildVideoConfiguration(inputs, file, logger) {
       /* Check if should Transcode */
       bitratecheck = parseInt(tier["bitrate"]);
       console.log("%s: %s <? %s", file._id, bitrateprobe, bitratecheck)
-      if (bitrateprobe !== null && bitrateprobe < bitratecheck) {
+      if (bitrateprobe !== null && parseInt(bitrateprobe) < parseInt(bitratecheck)) {
           console.log("we should be exiting now... no transcode needed");
           logger.AddSuccess("stream bitrate is already within allowed range");
           configuration.shouldProcess = false;
-          return;
       } else {
         bitratetarget = parseInt(tier["bitrate"] - tier["max_increase"] );
-        bitratemax = bitratetarget;
         cq = tier["cq"];
 
         configuration.RemoveOutputSetting("-c:v copy");
         configuration.AddOutputSetting(
-          `-c:v hevc_nvenc -qmin 0 -cq:v ${cq} -b:v ${bitratetarget} -maxrate:v ${bitratemax} -preset slow -tune hq -rc-lookahead 32 -spatial_aq:v 1 -aq-strength:v 8`
+          `-c:v hevc_nvenc -qmin 0 -cq:v ${cq} -b:v ${bitratetarget} -maxrate:v ${bitratecheck} -preset slow -tune hq -rc-lookahead 32 -spatial_aq:v 1 -aq-strength:v 8`
         );
 
         // Deal with BT.2020 Color Range Standard
