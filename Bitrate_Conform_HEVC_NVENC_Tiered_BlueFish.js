@@ -419,7 +419,7 @@ function buildVideoConfiguration(inputs, file, logger) {
     /* Check if should Remux into MKV */
     if ((stream.codec_name === "hevc" || stream.codec_name === "vp9") && file.container !== "mkv") {
       configuration.AddOutputSetting("-c:v copy");
-      logger.AddError("File is in HEVC codec but not MKV. Will remux");
+      console.log("File is in HEVC codec but not MKV. Will remux");
     }
 
     /* Remove png streams */
@@ -439,11 +439,15 @@ function buildVideoConfiguration(inputs, file, logger) {
       /* Check if should Transcode */
       bitratecheck = parseInt(tier["bitrate"]);
       console.log("%s: %s <? %s", file._id, bitrateprobe, bitratecheck)
-      if (bitrateprobe !== null && parseInt(bitrateprobe) < parseInt(bitratecheck)) {
+      /* under allowed rate AND */
+      /* codec is hevc AND */
+      /* format is mkv */
+      if (bitrateprobe !== null && parseInt(bitrateprobe) < parseInt(bitratecheck) && (file.video_codec_name === "hevc" && file.container === "mkv")) {
           console.log("we should be exiting now... no transcode needed");
           logger.AddSuccess("stream bitrate is already within allowed range");
           configuration.shouldProcess = false;
       } else {
+        /* any condition above is not true */
         bitratetarget = parseInt(tier["bitrate"] - tier["max_increase"] );
         cq = tier["cq"];
 
