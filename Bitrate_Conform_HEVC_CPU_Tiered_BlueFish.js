@@ -452,6 +452,7 @@ function buildVideoConfiguration(inputs, file, logger) {
         cq = tier["cq"];
 
         /* remove the remux copy */
+
         /* replace with CPU x265 */
         configuration.RemoveOutputSetting("-c:v copy");
         configuration.AddOutputSetting(
