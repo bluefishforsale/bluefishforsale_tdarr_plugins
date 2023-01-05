@@ -442,7 +442,7 @@ function buildVideoConfiguration(inputs, file, logger) {
       /* under allowed rate AND */
       /* codec is hevc AND */
       /* format is mkv */
-      if (bitrateprobe !== null && parseInt(bitrateprobe) < parseInt(bitratecheck) || (file.video_codec_name === "hevc" && file.container === "mkv")) {
+      if ( (bitrateprobe !== null && parseInt(bitrateprobe) < parseInt(bitratecheck)) && (file.video_codec_name === "hevc" && file.container === "mkv")) {
           console.log("we should be exiting now... no transcode needed");
           logger.AddSuccess("stream bitrate is already within allowed range");
           configuration.shouldProcess = false;
