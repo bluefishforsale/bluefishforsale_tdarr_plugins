@@ -442,15 +442,17 @@ function buildVideoConfiguration(inputs, file, logger) {
       /* under allowed rate AND */
       /* codec is hevc AND */
       /* format is mkv */
-      if (bitrateprobe !== null && parseInt(bitrateprobe) < parseInt(bitratecheck) || (file.video_codec_name === "hevc" && file.container === "mkv")) {
+      if (bitrateprobe !== null && parseInt(bitrateprobe) < parseInt(bitratecheck) && (file.video_codec_name !== "hevc" && file.container !== "mkv")) {
           console.log("we should be exiting now... no transcode needed");
           logger.AddSuccess("stream bitrate is already within allowed range");
           configuration.shouldProcess = false;
       } else {
-        /* any condition above is not true */
+        /* ANY condition above is NOT true */
         bitratetarget = parseInt(tier["bitrate"] - tier["max_increase"] );
         cq = tier["cq"];
 
+        /* remove the remux copy */
+        /* replace with CPU x265 */
         configuration.RemoveOutputSetting("-c:v copy");
         configuration.AddOutputSetting(
           `-c:v libx265 -qmin 0 -cq:v ${cq} -b:v ${bitratetarget} -maxrate:v ${bitratecheck} -preset slow -tune hq -rc-lookahead 32 -spatial_aq:v 1 -aq-strength:v 8`
