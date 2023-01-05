@@ -38,24 +38,24 @@ const details = () => {
       {
         name: "target_bitrate_1080p",
         type: 'string',
-        defaultValue: '10000000',
+        defaultValue: '14000000',
         inputUI: {
           type: 'text',
         },
         tooltip: `Specify the target bitrate for 1080p files, if current bitrate exceeds the target. Otherwise target_pct_reduction will be used.
-                \\nExample 10 Mbps\\n
-                10000000`,
+                \\nExample 14 Mbps\\n
+                14000000`,
       },
       {
         name: "target_bitrate_4KUHD",
         type: 'string',
-        defaultValue: '20000000',
+        defaultValue: '40000000',
         inputUI: {
           type: 'text',
         },
         tooltip: `Specify the target bitrate for 4KUHD files, if current bitrate exceeds the target. Otherwise target_pct_reduction will be used.
-                \\nExample 20 Mbps\\n
-                20000000`,
+                \\nExample 40 Mbps\\n
+                40000000`,
       },
       {
         name: "target_pct_reduction",
